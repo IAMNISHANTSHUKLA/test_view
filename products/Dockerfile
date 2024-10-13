@@ -1,0 +1,8 @@
+FROM eclipse-temurin:21
+VOLUME /tmp
+ARG JAVA_OPTS
+ENV JAVA_OPTS=$JAVA_OPTS
+COPY build/libs/products-0.0.1-SNAPSHOT.jar products.jar
+EXPOSE 8080
+ENTRYPOINT exec java $JAVA_OPTS -jar products.jar
+
