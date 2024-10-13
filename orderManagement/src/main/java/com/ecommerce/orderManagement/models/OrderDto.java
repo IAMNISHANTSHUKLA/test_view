@@ -1,6 +1,10 @@
 package com.ecommerce.orderManagement.models;
 
-public class OrderDto {
+import org.springframework.data.redis.core.TimeToLive;
+
+import java.io.Serializable;
+
+public class OrderDto implements Serializable {
     private int id;
     private int productId;
     private int quantity;
