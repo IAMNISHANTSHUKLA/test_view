@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-listing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-listing
+  template:
+    metadata:
+      labels:
+        app: product-listing
+    spec:
+      containers:
+      - name: product-listing
+        image: deep1704/ecommerce-product:03
+        env:
+          - name: PRODUCTS_MONGODB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: product-config
+                key: PRODUCTS_MONGODB_HOST
+          - name: PRODUCTS_MAIN_DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: product-config
+                key: PRODUCTS_MAIN_DB_HOST
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-listing-service
+spec:
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8080
+  selector:
+    app: product-listing
+  type: LoadBalancer

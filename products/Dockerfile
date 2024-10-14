@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21
+FROM openjdk:21
 VOLUME /tmp
 ARG JAVA_OPTS
 ENV JAVA_OPTS=$JAVA_OPTS

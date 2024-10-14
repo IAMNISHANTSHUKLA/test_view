@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-main
+  template:
+    metadata:
+      labels:
+        app: inventory-main
+    spec:
+      containers:
+      - name: inventory-main
+        image: postgres:latest
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "inventory_main"
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-db-service
+spec:
+  selector:
+    app: inventory-main
+  ports:
+    - name: tcp
+      port: 5432
+      targetPort: 5432

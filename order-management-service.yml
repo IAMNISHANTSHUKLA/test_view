@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-management
+  template:
+    metadata:
+      labels:
+        app: order-management
+    spec:
+      containers:
+      - name: order-management
+        image: deep1704/ecommerce-order-management:03
+        env:
+          - name: ORDERS_MAIN_DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: order-management-config
+                key: ORDERS_MAIN_DB_HOST
+          - name: ORDERS_CACHE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: order-management-config
+                key: ORDERS_CACHE_HOST
+      - name: order-cache
+        image: redis/redis-stack:latest
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-management-service
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: order-management
+  type: LoadBalancer

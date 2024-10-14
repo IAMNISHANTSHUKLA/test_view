@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-config
+data:
+  PRODUCTS_MONGODB_HOST: "product-es-service"
+  PRODUCTS_MAIN_DB_HOST: "product-db-service"

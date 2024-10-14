@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-cache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-cache
+  template:
+    metadata:
+      labels:
+        app: order-cache
+    spec:
+      containers:
+      - name: order-cache
+        image: redis/redis-stack:latest
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-cache-service
+spec:
+  selector:
+    app: order-cache
+  ports:
+    - name: tcp
+      port: 6379
+      targetPort: 6379

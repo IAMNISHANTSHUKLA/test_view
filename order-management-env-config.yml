@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-management-config
+data:
+  ORDERS_MAIN_DB_HOST: "order-db-service"
+  ORDERS_CACHE_HOST: "order-cache-service"
