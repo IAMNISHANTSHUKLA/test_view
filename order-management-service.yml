@@ -27,7 +27,8 @@ spec:
                 name: order-management-config
                 key: ORDERS_CACHE_HOST
       - name: order-cache
-        image: redis/redis-stack:latest
+        image: redis:latest
+        args: ["redis-server", "--notify-keyspace-events", "Ex"]
 
 
 ---
